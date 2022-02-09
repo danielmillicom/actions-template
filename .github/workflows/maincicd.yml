@@ -1,0 +1,35 @@
+name: Pipeline template projects
+
+on: [push]
+# Si se coloca un 'push' esto abarcara todas las ramas, para especificar
+# la rama en especifico se declara con el nombre de la sig manera:
+# push:
+#   branches:
+#     - master/dev/qa/dev2 ...
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compiling code
+        run: |
+          echo "Compilando el código java con la versión:"
+          java --version
+          echo "Compilando ..."
+      - name: Unit test
+        run: |
+          echo "Realizando las pruebas unitarias"
+  cd: 
+    runs-on: ubuntu-latest
+    needs: ["ci"]
+    steps:
+      - name: Create docker image
+        run: echo "Generadno la imagen de docker"
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: ["cd"]
+    steps:
+      - name: Deploy image to knative
+        run: echo "Desplegando imagen"
+
+                                                       
