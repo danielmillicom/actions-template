@@ -15,11 +15,12 @@ jobs:
           echo "Compilando el código java con la versión:"
           java --version
           echo "Compilando ..."
+          echo "Fin de la compilación"
       - name: Unit test
         run: |
           echo "Realizando las pruebas unitarias"
   cd: 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: ["ci"]
     steps:
       - name: Create docker image
