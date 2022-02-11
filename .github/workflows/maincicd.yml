@@ -13,8 +13,9 @@ jobs:
           echo "Downloading the python dependencies"
           pip install --no-cache-dir -r requirements.txt
           echo "Raising the server"
-          uvicorn app.business.app:app --reload
-          echo "Ready for request"
+          uvicorn app.business.app:app --reload &
+          sleep 10
+          echo "Server ready for requests"
 
   # cd: 
   #   runs-on: windows-latest
