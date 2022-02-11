@@ -22,9 +22,12 @@ jobs:
     steps:
       - name: Cloning repo in runner
         uses: actions/checkout@v2
-      - name: Unit test
-        run: docker --version
-        
+      - name: Create docker image
+        run: |
+          echo "Create docker image"
+          docker build -t seed-python .
+          ls -a
+
 
           
 #  -data '{"msg": "seed python"}' -H 'Ce-Id: 536808d3-88be-4077-9d7a-a3f162705f79' 'Ce-specversion: 0.3' -H 'Ce-Type: dev.knative.samples.helloworld' -H 'Ce-Source: dev.knative.samples/helloworldsource' -H 'Content-Type: application/json' http://127.0.0.1:8000/
