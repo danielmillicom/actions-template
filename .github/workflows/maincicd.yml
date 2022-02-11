@@ -10,6 +10,8 @@ jobs:
         run: |
           echo "Validando versión de python"
           python --version
+          pwd
+          ls -a
       - name: Unit test
         run: |
           echo "Realizando las pruebas unitarias"
