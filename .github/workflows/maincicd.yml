@@ -2,6 +2,10 @@ name: Pipeline Python template
 
 on: [push]
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -20,13 +24,37 @@ jobs:
     runs-on: ubuntu-latest
     needs: ["ci"]
     steps:
-      - name: Cloning repo in runner
+      - name: Checkout repo
         uses: actions/checkout@v2
       - name: Create docker image
-        run: |
-          echo "Create docker image"
-          docker build -t seed-python .
-          ls -a
+        run: echo "Unit test"
+  build-and-upload-image:
+    runs-on: ubuntu-latest
+    needs: ["unit-test"]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ${{ env.REGRISTRY}}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
 
           
