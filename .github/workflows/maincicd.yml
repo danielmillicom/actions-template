@@ -38,7 +38,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Log in to the Container registry
-        run:
+        run: |
           echo ${{ env.REGRISTRY}}
           echo ${{ github.actor }}
           echo ${{ secrets.GITHUB_TOKEN }}
