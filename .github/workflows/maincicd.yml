@@ -38,15 +38,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Log in to the Container registry
-        run: |
-          echo ${{ env.REGRISTRY}}
-          echo ${{ github.actor }}
-          echo ${{ secrets.GITHUB_TOKEN }}
-        # uses: docker/login-action@v1
-        # with:
-        #   registry: ${{ env.REGRISTRY}}
-        #   username: ${{ github.actor }}
-        #   password: ${{ secrets.GITHUB_TOKEN }}
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY}}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
