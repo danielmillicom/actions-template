@@ -7,13 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Copy project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2          
+      - name: Unit test
         run: |
           pwd
           ls -a
-      - name: Unit test
-        run: |
-          echo "Realizando las pruebas unitarias"
   # cd: 
   #   runs-on: windows-latest
   #   needs: ["ci"]
