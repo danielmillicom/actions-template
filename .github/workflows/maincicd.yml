@@ -16,8 +16,16 @@ jobs:
           uvicorn app.business.app:app --reload &
           sleep 5
           echo "Server ready for requests"
-          curl --version
-          curl -X POST http://127.0.0.1:8000
+  unit-test:
+    runs-on: ubuntu-latest
+    needs: ["ci"]
+    steps:
+      - name: Cloning repo in runner
+        uses: actions/checkout@v2
+      - name: Unit test
+        run: docker --version
+        
+
           
 #  -data '{"msg": "seed python"}' -H 'Ce-Id: 536808d3-88be-4077-9d7a-a3f162705f79' 'Ce-specversion: 0.3' -H 'Ce-Type: dev.knative.samples.helloworld' -H 'Ce-Source: dev.knative.samples/helloworldsource' -H 'Content-Type: application/json' http://127.0.0.1:8000/
 
