@@ -14,8 +14,9 @@ jobs:
           pip install --no-cache-dir -r requirements.txt
           echo "Raising the server"
           uvicorn app.business.app:app --reload &
-          sleep 10
+          sleep 7
           echo "Server ready for requests"
+          curl -v "http://127.0.0.1:8000/" -X POST -H "Ce-Id: 536808d3-88be-4077-9d7a-a3f162705f79" "Ce-specversion: 0.3" -H "Ce-Type: dev.knative.samples.helloworld" -H "Ce-Source: dev.knative.samples/helloworldsource" -H "Content-Type: application/json" -d '{"msg": "seed python"}'
 
   # cd: 
   #   runs-on: windows-latest
