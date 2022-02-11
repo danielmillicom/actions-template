@@ -1,0 +1,31 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: handler-python-service
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - image: docker.io/{username_docker}/handler-python-service
+        env:
+        - name: K_SINK
+          value: http://broker-ingress.knative-eventing.svc.cluster.local/default/example-broker
+---
+apiVersion: eventing.knative.dev/v1
+kind: Trigger
+metadata:
+  name: event-seed-python
+  namespace: default
+  annotations:
+    knative-eventing-injection: enabled
+spec:
+  broker: example-broker
+  filter:
+    attributes:
+      type: python
+  subscriber:
+    ref:
+      apiVersion: v1
+      kind: Service
+      name: handler-python-service
