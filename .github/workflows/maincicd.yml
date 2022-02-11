@@ -6,12 +6,19 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - name: Copy project
+      - name: Cloning repo in runner
         uses: actions/checkout@v2          
-      - name: Unit test
+      - name: Setup environment
         run: |
-          pwd
-          ls -a
+          echo "Creating virtual environment"
+          python -m venv venv
+          ./venv/bin/activate
+          echo "Downloading the python dependencies"
+          pip install --no-cache-dir -r requirements.txt
+          echo "Raising the server"
+          uvicorn app.business.app:app --reload
+          echo "Ready for request"
+
   # cd: 
   #   runs-on: windows-latest
   #   needs: ["ci"]
