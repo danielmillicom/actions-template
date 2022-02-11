@@ -6,10 +6,9 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - name: Compiling code
+      - name: Copy project
+        uses: actions/checkout@v2
         run: |
-          echo "Validando versión de python"
-          python --version
           pwd
           ls -a
       - name: Unit test
