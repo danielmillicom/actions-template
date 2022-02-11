@@ -10,9 +10,6 @@ jobs:
         uses: actions/checkout@v2          
       - name: Setup environment
         run: |
-          echo "Creating virtual environment"
-          python -m venv venv
-          ./venv/bin/activate
           echo "Downloading the python dependencies"
           pip install --no-cache-dir -r requirements.txt
           echo "Raising the server"
