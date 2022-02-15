@@ -7,30 +7,33 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  # ci:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Cloning repo in runner
-  #       uses: actions/checkout@v2          
-  #     - name: Setup environment
-  #       run: |
-  #         echo "Downloading the python dependencies"
-  #         pip install --no-cache-dir -r requirements.txt
-  #         echo "Raising the server"
-  #         uvicorn app.business.app:app --reload &
-  #         sleep 5
-  #         echo "Server ready for requests"
-  # unit-test:
-  #   runs-on: ubuntu-latest
-  #   needs: ["ci"]
-  #   steps:
-  #     - name: Checkout repo
-  #       uses: actions/checkout@v2
-  #     - name: Create docker image
-  #       run: echo "Unit test"
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo in runner
+        uses: actions/checkout@v2          
+      - name: Setup environment
+        run: |
+          echo "Downloading the python dependencies"
+          pip install --no-cache-dir -r requirements.txt
+          echo "Raising the server"
+          uvicorn app.business.app:app --reload --port 9017 &
+          sleep 5
+          echo "Server ready for requests"
+
+  unit-test:
+    runs-on: ubuntu-latest
+    needs: ["ci"]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Unit test
+        run: echo "Unit test"
+
+
   build-and-upload-image:
     runs-on: ubuntu-latest
-    # needs: ["unit-test"]
+    needs: ["unit-test"]
     permissions:
       contents: read
       packages: write
