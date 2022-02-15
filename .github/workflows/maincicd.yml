@@ -20,7 +20,7 @@ jobs:
           uvicorn app.business.app:app --reload --port 9017 &
           sleep 5
           echo "Server ready for requests"
-          ping –c 4 localhost:9017
+          curl --version
 
   unit-test:
     runs-on: ubuntu-latest
