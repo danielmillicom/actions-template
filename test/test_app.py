@@ -22,5 +22,5 @@ class Test(TestCase):
         response = client.post("/",headers=headers, data=body)
         print("response: "+str(response.json()))
 
-        self.assertEqual("Hi - "+str(name_test), response.json()['msg'])
+        self.assertEqual(str(name_test), response.json()['msg'])
 

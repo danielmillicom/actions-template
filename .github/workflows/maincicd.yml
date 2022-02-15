@@ -17,10 +17,10 @@ jobs:
           echo "Downloading the python dependencies"
           pip install --no-cache-dir -r requirements.txt
           echo "Raising the server"
-          uvicorn app.business.app:app --reload --port 9017 &
+          uvicorn app.business.app:app --reload --port 8080 &
           sleep 5
           echo "Server ready for requests"
-          curl -X POST --header 'Ce-Id: 536808d3-88be-4077-9d7a-a3f162705f79' --header 'Ce-specversion: 0.3' --header 'Ce-Type: dev.knative.samples.helloworld' --header 'Ce-Source: dev.knative.samples/helloworldsource' --header 'Content-Type: application/json' -d '{"msg": "seed python"}' -v 'localhost:9017'
+          curl POST --header 'Ce-Id: 536808d3-88be-4077-9d7a-a3f162705f79' --header 'Ce-specversion: 0.3' --header 'Ce-Type: dev.knative.samples.helloworld' --header 'Ce-Source: dev.knative.samples/helloworldsource' --header 'Content-Type: application/json' -d '{"msg": "seed python"}' -v 'localhost:8080'
 
   unit-test:
     runs-on: ubuntu-latest
