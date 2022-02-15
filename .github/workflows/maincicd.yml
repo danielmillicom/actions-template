@@ -7,7 +7,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  ci:
+  start-server:
     runs-on: ubuntu-latest
     steps:
       - name: Cloning repo in runner
@@ -19,17 +19,18 @@ jobs:
           echo "Raising the server"
           uvicorn app.business.app:app --reload --port 8080 &
           sleep 5
-          echo "Server ready for requests"
+          echo "Server started successfully"
           curl POST --header 'Ce-Id: 536808d3-88be-4077-9d7a-a3f162705f79' --header 'Ce-specversion: 0.3' --header 'Ce-Type: dev.knative.samples.helloworld' --header 'Ce-Source: dev.knative.samples/helloworldsource' --header 'Content-Type: application/json' -d '{"msg": "seed python"}' -v 'localhost:8080'
 
   unit-test:
     runs-on: ubuntu-latest
-    needs: ["ci"]
+    needs: ["start-server"]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Unit test
         run: |
+          echo "Prepare dependencies"
           pip install --no-cache-dir -r requirements.txt
           echo "Unit test"
           coverage run -m unittest discover
